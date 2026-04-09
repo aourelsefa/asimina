@@ -25,7 +25,7 @@ export const mockAbout = {
   `,
   profileImage: {
     id: 2,
-    source_url: '/gallery/about.png',
+    source_url: '/gallery/about-me.JPG',
     alt_text: 'Asimina Habipi - Photographer',
     media_details: {
       width: 800,

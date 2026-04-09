@@ -1,7 +1,7 @@
 import Hero from '@/components/Hero'
 import About from '@/components/About'
 import Categories from '@/components/Categories'
-import Gallery from '@/components/Gallery'
+import ScrollingGallery from '@/components/ScrollingGallery'
 import Contact from '@/components/Contact'
 import { mockHero, mockAbout, mockGallery, mockContact } from '@/data/mockData'
 
@@ -35,7 +35,20 @@ export default function Home() {
         profileImage={mockAbout.profileImage}
       />
       <Categories />
-      <Gallery images={mockGallery} />
+      <section id="gallery" className="py-32 px-4 bg-black">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-12 text-center">
+            <span className="text-sm text-white/70 uppercase tracking-widest font-medium mb-4 block">
+              Portfolio
+            </span>
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6">
+              Gallery
+            </h2>
+            <div className="w-24 h-px bg-white/30 mx-auto" />
+          </div>
+          <ScrollingGallery images={mockGallery} variant="minimal" />
+        </div>
+      </section>
       <Contact 
         title={mockContact.title}
         email={mockContact.email}

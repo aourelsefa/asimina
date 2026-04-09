@@ -73,5 +73,41 @@ h1, h2, h3, h4, h5, h6 {
       opacity: 1;
     }
   }
+  
+  @keyframes scrollUp {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-33.333%);
+    }
+  }
+  
+  @keyframes scrollDown {
+    from {
+      transform: translateY(-33.333%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-scroll-up {
+    animation: scrollUp 40s linear infinite;
+  }
+  
+  .animate-scroll-up-paused {
+    animation: scrollUp 40s linear infinite;
+    animation-play-state: paused;
+  }
+  
+  .animate-scroll-down {
+    animation: scrollDown 40s linear infinite;
+  }
+  
+  .animate-scroll-down-paused {
+    animation: scrollDown 40s linear infinite;
+    animation-play-state: paused;
+  }
 }
 

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import FloatingSocialButton from '@/components/FloatingSocialButton'
 
 export const metadata: Metadata = {
   title: 'Asimina Habipi Photography',
@@ -19,6 +20,7 @@ export default function RootLayout({
         <Navigation />
         {children}
         <Footer />
+        <FloatingSocialButton />
       </body>
     </html>
   )

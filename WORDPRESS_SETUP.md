@@ -127,3 +127,4 @@ add_action('init', 'add_cors_headers');
 - [ ] Set `NEXT_PUBLIC_WORDPRESS_API_URL` in `.env.local`
 - [ ] Tested API endpoints in browser
 
+
