@@ -2,6 +2,8 @@
 export interface Category {
   id: string
   name: string
+  /** H1 + document title for SEO, e.g. "Wedding in Oslo" */
+  pageTitle: string
   slug: string
   description: string
   shortDescription: string
@@ -13,6 +15,7 @@ export const categories: Category[] = [
   {
     id: 'wedding',
     name: 'Wedding',
+    pageTitle: 'Wedding in Oslo',
     slug: 'wedding',
     shortDescription: 'Capturing your special day with authenticity and emotion',
     description: 'Capturing your special day with authenticity and emotion',
@@ -33,6 +36,7 @@ export const categories: Category[] = [
   {
     id: 'baptism',
     name: 'Baptism',
+    pageTitle: 'Baptism in Oslo',
     slug: 'baptism',
     shortDescription: 'Documenting meaningful moments of faith and celebration',
     description: 'Documenting meaningful moments of faith and celebration',
@@ -51,6 +55,7 @@ export const categories: Category[] = [
   {
     id: 'modelling',
     name: 'Modelling',
+    pageTitle: 'Modelling in Oslo',
     slug: 'modelling',
     shortDescription: 'Portrait and fashion photography sessions',
     description: 'Portrait and fashion photography sessions',
@@ -70,6 +75,7 @@ export const categories: Category[] = [
   {
     id: 'events',
     name: 'Events',
+    pageTitle: 'Events in Oslo',
     slug: 'events',
     shortDescription: 'Corporate and social event photography',
     description: 'Corporate and social event photography',
@@ -89,6 +95,7 @@ export const categories: Category[] = [
   {
     id: 'portraits',
     name: 'Portraits',
+    pageTitle: 'Portraits in Oslo',
     slug: 'portraits',
     shortDescription: 'Personal and professional portrait sessions',
     description: 'Personal and professional portrait sessions',

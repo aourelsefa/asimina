@@ -35,7 +35,7 @@ export default function Home() {
         profileImage={mockAbout.profileImage}
       />
       <Categories />
-      <section id="gallery" className="py-32 px-4 bg-black">
+      <section id="gallery" className="bg-[#1a1a1a] px-4 py-32">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12 text-center">
             <span className="text-sm text-white/70 uppercase tracking-widest font-medium mb-4 block">

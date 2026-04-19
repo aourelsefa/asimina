@@ -1,8 +1,42 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { mockContact } from '@/data/mockData'
+
+/** Smooth-scroll anchor offset — keep in sync with nav bar height (logo + vertical padding). */
+const NAV_ANCHOR_OFFSET_PX = 136
+
+function telHref(phone: string) {
+  return `tel:${phone.replace(/[^\d+]/g, '')}`
+}
+
+/** Hash links off the homepage go to `/#section` so the home layout loads with the right anchor. */
+function navItemDestination(href: string) {
+  if (href.startsWith('#')) return `/${href}`
+  return href
+}
+
+function NavContactStrip({ shouldShowScrolled }: { shouldShowScrolled: boolean }) {
+  const link = shouldShowScrolled
+    ? 'text-gray-800 hover:text-gray-950 transition-colors'
+    : 'text-white hover:text-white/95 transition-colors'
+  const rule = shouldShowScrolled ? 'bg-gray-900/40' : 'bg-white/50'
+
+  return (
+    <div className="flex flex-wrap items-center justify-end gap-x-3 gap-y-1 text-[13px] font-medium tracking-wide">
+      <a href={telHref(mockContact.phone)} className={link}>
+        {mockContact.phone}
+      </a>
+      <span className={`inline-block h-3.5 w-px shrink-0 ${rule}`} aria-hidden />
+      <a href={`mailto:${mockContact.email}`} className={`${link} lowercase tracking-normal`}>
+        {mockContact.email}
+      </a>
+    </div>
+  )
+}
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -21,7 +55,7 @@ export default function Navigation() {
   const navItems = [
     { href: '#about', label: 'About' },
     { href: '#categories', label: 'Categories' },
-    { href: '#gallery', label: 'Gallery' },
+    { href: '/gallery', label: 'Gallery' },
     { href: '#contact', label: 'Contact' },
   ]
 
@@ -38,7 +72,7 @@ export default function Navigation() {
     const element = document.getElementById(targetId)
     
     if (element) {
-      const offset = 80 // Account for fixed navigation height
+      const offset = NAV_ANCHOR_OFFSET_PX
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
       const offsetPosition = elementPosition - offset
 
@@ -59,8 +93,8 @@ export default function Navigation() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         shouldShowScrolled
-          ? 'bg-white/90 backdrop-blur-md shadow-sm py-2'
-          : 'bg-transparent py-4'
+          ? 'bg-white/90 backdrop-blur-md shadow-sm py-4 md:py-5 min-h-[5.25rem] md:min-h-[5.75rem]'
+          : 'bg-transparent py-5 md:py-6 min-h-[5.75rem] md:min-h-[6.25rem]'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -72,58 +106,78 @@ export default function Navigation() {
                 e.preventDefault()
                 window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
-              className={`text-xl font-bold transition-all duration-300 font-serif ${
-                shouldShowScrolled
-                  ? 'text-gray-900'
-                  : 'text-white'
-              }`}
+              className="relative block shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white rounded-sm"
             >
-              Asimina Habipi
+              <Image
+                src="/asimina-habipi-logo.png"
+                alt="Asimina Habipi Photography"
+                width={280}
+                height={90}
+                priority
+                className={`w-auto object-contain object-left transition-all duration-300 ${
+                  shouldShowScrolled
+                    ? 'h-12 sm:h-14 md:h-[3.75rem]'
+                    : 'h-14 sm:h-16 md:h-[4.25rem]'
+                } ${!shouldShowScrolled ? 'invert drop-shadow-md' : ''}`}
+              />
             </a>
           ) : (
             <Link
               href="/"
-              className="text-xl font-bold transition-all duration-300 font-serif text-gray-900"
+              className="relative block shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 rounded-sm"
             >
-              Asimina Habipi
+              <Image
+                src="/asimina-habipi-logo.png"
+                alt="Asimina Habipi Photography"
+                width={280}
+                height={90}
+                priority
+                className="h-12 sm:h-14 md:h-[3.75rem] w-auto object-contain object-left transition-all duration-300"
+              />
             </Link>
           )}
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-12">
-            {navItems.map((item) => {
-              if (!isHomePage) {
+          {/* Desktop: contact row + rule + menu */}
+          <div className="hidden md:flex min-w-0 flex-col items-end justify-center gap-2.5">
+            <NavContactStrip shouldShowScrolled={shouldShowScrolled} />
+            <div
+              className={`flex w-full min-w-max items-center justify-end gap-10 border-t pt-3 lg:gap-12 ${
+                shouldShowScrolled ? 'border-gray-200' : 'border-white/30'
+              }`}
+            >
+              {navItems.map((item) => {
+                const linkClass = `text-sm uppercase tracking-wider font-medium transition-all duration-300 relative group ${
+                  shouldShowScrolled
+                    ? 'text-gray-700 hover:text-gray-900'
+                    : 'text-white hover:text-white'
+                }`
+                const underline = (
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-300 group-hover:w-full" />
+                )
+                if (!isHomePage) {
+                  return (
+                    <Link key={item.href} href={navItemDestination(item.href)} className={linkClass}>
+                      {item.label}
+                      {underline}
+                    </Link>
+                  )
+                }
+                if (item.href.startsWith('#')) {
+                  return (
+                    <a key={item.href} href={item.href} onClick={(e) => handleNavClick(e, item.href)} className={linkClass}>
+                      {item.label}
+                      {underline}
+                    </a>
+                  )
+                }
                 return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`text-sm uppercase tracking-wider font-medium transition-all duration-300 relative group ${
-                      shouldShowScrolled
-                        ? 'text-gray-700 hover:text-gray-900'
-                        : 'text-white hover:text-white'
-                    }`}
-                  >
+                  <Link key={item.href} href={item.href} className={linkClass}>
                     {item.label}
-                    <span className="absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-300 group-hover:w-full" />
+                    {underline}
                   </Link>
                 )
-              }
-              return (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className={`text-sm uppercase tracking-wider font-medium transition-all duration-300 relative group ${
-                    shouldShowScrolled
-                      ? 'text-gray-700 hover:text-gray-900'
-                      : 'text-white hover:text-white'
-                  }`}
-                >
-                  {item.label}
-                  <span className="absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-300 group-hover:w-full" />
-                </a>
-              )
-            })}
+              })}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -162,36 +216,87 @@ export default function Navigation() {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden py-6 space-y-6">
+            <div
+              className={`flex flex-col gap-3 rounded-sm border px-4 py-3 ${
+                shouldShowScrolled
+                  ? 'border-gray-200 bg-gray-50/80'
+                  : 'border-white/25 bg-black/20 backdrop-blur-sm'
+              }`}
+            >
+              <p
+                className={`text-[10px] uppercase tracking-[0.2em] ${
+                  shouldShowScrolled ? 'text-gray-500' : 'text-white/60'
+                }`}
+              >
+                Reach out
+              </p>
+              <div className="flex flex-col gap-2.5 text-sm">
+                <a
+                  href={telHref(mockContact.phone)}
+                  className={
+                    shouldShowScrolled
+                      ? 'font-medium text-gray-900'
+                      : 'font-medium text-white'
+                  }
+                >
+                  {mockContact.phone}
+                </a>
+                <span
+                  className={`h-px w-full ${shouldShowScrolled ? 'bg-gray-900/15' : 'bg-white/25'}`}
+                  aria-hidden
+                />
+                <a
+                  href={`mailto:${mockContact.email}`}
+                  className={
+                    shouldShowScrolled
+                      ? 'text-gray-800 lowercase'
+                      : 'text-white/95 lowercase'
+                  }
+                >
+                  {mockContact.email}
+                </a>
+              </div>
+            </div>
             {navItems.map((item) => {
+              const mobileClass = `block text-sm uppercase tracking-wider font-medium transition-colors ${
+                shouldShowScrolled ? 'text-gray-700' : 'text-white'
+              }`
               if (!isHomePage) {
                 return (
                   <Link
                     key={item.href}
-                    href={item.href}
-                    className={`block text-sm uppercase tracking-wider font-medium transition-colors ${
-                      shouldShowScrolled
-                        ? 'text-gray-700'
-                        : 'text-white'
-                    }`}
+                    href={navItemDestination(item.href)}
+                    className={mobileClass}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {item.label}
                   </Link>
                 )
               }
+              if (item.href.startsWith('#')) {
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className={mobileClass}
+                    onClick={(e) => {
+                      handleNavClick(e, item.href)
+                      setIsMobileMenuOpen(false)
+                    }}
+                  >
+                    {item.label}
+                  </a>
+                )
+              }
               return (
-                <a
+                <Link
                   key={item.href}
                   href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className={`block text-sm uppercase tracking-wider transition-colors ${
-                    shouldShowScrolled
-                      ? 'text-gray-700'
-                      : 'text-white'
-                  }`}
+                  className={mobileClass}
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.label}
-                </a>
+                </Link>
               )
             })}
           </div>

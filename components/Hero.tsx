@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { WordPressImage } from '@/types/wordpress'
 
 interface HeroProps {
@@ -10,8 +11,22 @@ interface HeroProps {
   backgroundImage: WordPressImage | null
 }
 
+/** Prefer a break after “…Oslo” when the title follows “X for Y” pattern; otherwise split near the middle. */
+function heroTitleLines(title: string): [string, string] {
+  const forMarker = ' for '
+  const idx = title.indexOf(forMarker)
+  if (idx !== -1) {
+    return [title.slice(0, idx), title.slice(idx + 1)]
+  }
+  const words = title.trim().split(/\s+/)
+  if (words.length <= 1) return [title, '']
+  const mid = Math.ceil(words.length / 2)
+  return [words.slice(0, mid).join(' '), words.slice(mid).join(' ')]
+}
+
 export default function Hero({ title, subtitle, backgroundImage }: HeroProps) {
   const [isLoaded, setIsLoaded] = useState(false)
+  const [titleLine1, titleLine2] = heroTitleLines(title)
 
   useEffect(() => {
     setIsLoaded(true)
@@ -37,24 +52,35 @@ export default function Hero({ title, subtitle, backgroundImage }: HeroProps) {
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black" />
       )}
       
-      <div className={`relative z-10 text-center px-4 max-w-6xl mx-auto transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <div className="mb-6">
-          <span className="inline-block text-white/90 text-sm md:text-base font-normal tracking-[0.3em] uppercase mb-4">
-            Photography
-          </span>
-        </div>
-        
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-8 leading-[0.9] text-shadow-soft">
-          <span className="block">{title.split(' ').slice(0, -2).join(' ')}</span>
-          <span className="block text-white/90">{title.split(' ').slice(-2).join(' ')}</span>
+      <div className={`relative z-10 text-center px-4 max-w-5xl mx-auto transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-8 leading-[1.05] text-balance text-shadow-soft">
+          <span className="block">{titleLine1}</span>
+          {titleLine2 ? (
+            <span className="block text-white/90 mt-1 md:mt-2">{titleLine2}</span>
+          ) : null}
         </h1>
-        
+
         <div className="w-24 h-px bg-white/50 mx-auto mb-8" />
-        
-        <p 
-          className="text-lg md:text-2xl lg:text-3xl text-white/95 font-normal max-w-3xl mx-auto leading-relaxed"
+
+        <p
+          className="text-lg md:text-xl lg:text-2xl text-white/95 font-normal max-w-2xl mx-auto leading-relaxed text-balance mb-10"
           dangerouslySetInnerHTML={{ __html: subtitle }}
         />
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5">
+          <Link
+            href="/gallery"
+            className="inline-flex items-center justify-center min-w-[200px] px-8 py-3.5 bg-white text-gray-900 text-sm font-semibold tracking-wide uppercase transition hover:bg-white/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            View Portfolio
+          </Link>
+          <Link
+            href="/#contact"
+            className="inline-flex items-center justify-center min-w-[200px] px-8 py-3.5 border border-white/80 text-white text-sm font-semibold tracking-wide uppercase transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            Check Availability
+          </Link>
+        </div>
       </div>
 
       <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-10">

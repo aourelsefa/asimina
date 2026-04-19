@@ -2,12 +2,12 @@
 // This will be replaced with WordPress API calls later
 
 export const mockHero = {
-  title: 'Capturing Life\'s Beautiful Moments',
-  subtitle: 'Professional Photography Services',
+  title: 'Photographer in Oslo for Weddings, Baptisms & Events',
+  subtitle: 'Capturing real moments with a timeless, cinematic style',
   backgroundImage: {
     id: 1,
-    source_url: '/hero.jpg',
-    alt_text: 'Photography background',
+    source_url: '/asimina-habipi-photographer-in-oslo.jpg',
+    alt_text: 'Asimina Habipi — photographer in Oslo',
     media_details: {
       width: 1920,
       height: 1080,
@@ -34,11 +34,12 @@ export const mockAbout = {
   },
 }
 
-// Gallery images from public/gallery folder
+// Gallery images from public/gallery (synced with folder; excludes about-me.JPG — used only in About)
 const galleryImages = [
   '_DSC0103.jpg',
   '_DSC0816.jpg',
   '10.jpg',
+  'about.png',
   'd.jpg',
   'DIO_1389 (3).jpg',
   'DIO_1416.JPG',
@@ -70,19 +71,20 @@ const galleryImages = [
   'ρIZIBW.jpg',
 ]
 
+/** Display hints for compressed files (aspect varies; Next/Image + object-cover handles crop). */
 export const mockGallery = galleryImages.map((filename, index) => ({
   id: index + 3,
   source_url: `/gallery/${filename}`,
   alt_text: `Gallery image ${index + 1}`,
   media_details: {
-    width: 1200,
+    width: 1600,
     height: 1200,
   },
 }))
 
 export const mockContact = {
   title: 'Get In Touch',
-  email: 'hello@photographer.com',
+  email: 'asiminahabipi@gmail.com',
   phone: '+1 (555) 123-4567',
   address: '123 Photography Street, Creative City, CC 12345',
 }

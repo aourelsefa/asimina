@@ -1,26 +1,37 @@
 'use client'
 
+import Image from 'next/image'
+import Link from 'next/link'
+import { mockContact } from '@/data/mockData'
+
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   
   return (
-    <footer className="bg-black text-white py-24 px-4 border-t border-white/10">
+    <footer className="bg-[#0f0f0f] text-white py-24 px-4 border-t border-white/10">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* Brand */}
-          <div className="md:col-span-5">
-            <div className="mb-6">
-              <p className="text-2xl md:text-3xl font-bold font-serif text-white">
-                Asimina Habipi Photography
+          <div className="md:col-span-5 flex flex-col">
+            <div className="mb-8 max-w-[min(100%,420px)] md:mb-10">
+              <Link
+                href="/"
+                className="inline-block w-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60 rounded-sm"
+              >
+                <Image
+                  src="/LogoNegative.png"
+                  alt="Asimina Habipi Photography"
+                  width={420}
+                  height={137}
+                  className="h-auto w-full"
+                />
+              </Link>
+              <p className="mt-3 max-w-sm text-xs leading-relaxed tracking-wide text-white/50">
+                Photographer based in Oslo — weddings, baptisms, events, and portraits.
               </p>
-              <div className="mt-4 w-16 h-px bg-white/20" />
             </div>
-            <p className="text-white/70 text-base leading-relaxed max-w-md">
-              Photographer based in Oslo, focusing on people, places, and atmosphere. I work quietly and
-              intentionally—capturing honest moments and subtle details that feel personal and real.
-            </p>
 
-            <div className="mt-8 flex items-center gap-4">
+            <div className="flex items-center gap-4">
               <a
                 href="https://instagram.com"
                 target="_blank"
@@ -74,9 +85,9 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#gallery" className="text-white/70 hover:text-white transition-colors">
+                <Link href="/gallery" className="text-white/70 hover:text-white transition-colors">
                   Gallery
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#contact" className="text-white/70 hover:text-white transition-colors">
@@ -130,8 +141,8 @@ export default function Footer() {
                 Oslo, Norway
               </p>
               <p className="leading-relaxed">
-                <a href="mailto:hello@photographer.com" className="hover:text-white transition-colors">
-                  hello@photographer.com
+                <a href={`mailto:${mockContact.email}`} className="hover:text-white transition-colors">
+                  {mockContact.email}
                 </a>
               </p>
               <p className="leading-relaxed">

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { WordPressImage } from '@/types/wordpress'
 
 interface ScrollingGalleryProps {
@@ -31,10 +32,10 @@ export default function ScrollingGallery({ images, variant = 'default' }: Scroll
       border: 'border-white/20',
     },
     minimal: {
-      container: 'bg-gray-50',
-      overlay: 'bg-white/90',
-      text: 'text-gray-900',
-      border: 'border-gray-200',
+      container: 'bg-[#1a1a1a]',
+      overlay: 'bg-[#1a1a1a]/85',
+      text: 'text-white',
+      border: 'border-white/15',
     },
     elegant: {
       container: 'bg-gradient-to-br from-gray-900 via-black to-gray-900',
@@ -136,7 +137,12 @@ export default function ScrollingGallery({ images, variant = 'default' }: Scroll
       }`}>
         <div className="text-center px-4">
           <h3 className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${styles.text}`}>
-            View Our Album
+            <Link
+              href="/gallery"
+              className="rounded-sm underline-offset-[6px] transition hover:underline hover:opacity-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current"
+            >
+              View Our Album
+            </Link>
           </h3>
           <p className={`${styles.text} text-lg md:text-xl font-medium uppercase tracking-wider opacity-90`}>
             Explore Our Work

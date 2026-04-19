@@ -1,93 +1,65 @@
-'use client'
-
+import Image from 'next/image'
 import Link from 'next/link'
 import { categories } from '@/data/categories'
 
+/** Cover art per category — files in `public/services`. */
+const serviceCoverById: Record<string, string> = {
+  wedding: '/services/wedding-in-islo.jpg',
+  baptism: '/services/baptism-in-oslo.jpg',
+  modelling: '/services/modelling-in-oslo.jpg',
+  events: '/services/events-in-oslo.jpg',
+  portraits: '/services/portrait-in-oslo.jpg',
+}
+
 export default function Categories() {
   return (
-    <section id="categories" className="py-32 px-4 bg-white relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
-      <div className="absolute top-1/4 right-0 w-96 h-96 bg-gray-50 rounded-full blur-3xl opacity-30 -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-gray-50 rounded-full blur-3xl opacity-30 translate-y-1/2 -translate-x-1/2" />
-      
-      <div className="relative max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <span className="text-sm text-gray-600 uppercase tracking-widest font-medium mb-4 block">
-            Services
-          </span>
-          <h2 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
-            Photography Categories
-          </h2>
-          <div className="w-24 h-px bg-gray-300 mx-auto mb-8" />
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Explore different aspects of my work. Each category represents a different approach 
-            to capturing moments, emotions, and stories.
+    <section id="categories" className="bg-[#f5f5f5] py-20 text-gray-900 md:py-28">
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="mx-auto mb-10 max-w-3xl text-center">
+          <span className="text-xs font-bold uppercase tracking-[0.25em] text-gray-500">Services</span>
+          <h2 className="mt-2 font-serif text-4xl font-bold text-gray-900 md:text-5xl">Photography services</h2>
+          <p className="mt-3 text-gray-600">
+            Weddings, baptisms, portraits, and more — each session is approached with patience, observation, and a
+            cinematic eye.
           </p>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {categories.map((category, index) => (
-            <Link
-              key={category.id}
-              href={`/${category.slug}`}
-              className="group relative overflow-hidden bg-white border border-gray-200 hover:border-gray-300 transition-all duration-500 rounded-lg shadow-sm hover:shadow-xl"
-            >
-              {/* Number indicator */}
-              <div className="absolute top-6 left-6 z-10">
-                <span className="text-6xl font-bold text-gray-100 group-hover:text-gray-200 transition-colors duration-500">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-              </div>
-
-              <div className="relative p-8 lg:p-10 min-h-[320px] flex flex-col">
-                {/* Content */}
-                <div className="relative z-10 flex-1 flex flex-col">
-                  <div className="mb-6">
-                    <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 group-hover:translate-x-2 transition-transform duration-300">
-                      {category.name}
-                    </h3>
-                    <div className="w-16 h-px bg-gray-300 mb-4" />
+      <div className="border-y border-gray-200/80 bg-[#f5f5f5] py-8">
+        <div className="mx-auto flex max-w-[1600px] flex-wrap justify-center gap-4 px-4 pb-8 pt-2 sm:gap-5 md:px-8">
+          {categories.map((cat) => {
+            const src = serviceCoverById[cat.id] ?? serviceCoverById.wedding
+            return (
+              <Link
+                key={cat.id}
+                href={`/${cat.slug}`}
+                className="group relative w-[min(100%,280px)] shrink-0 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition hover:border-gray-400 hover:shadow-lg sm:w-[260px] md:w-[272px]"
+              >
+                <article className="relative">
+                  <div className="relative aspect-[3/4]">
+                    <Image
+                      src={src}
+                      alt={`${cat.name} photography`}
+                      fill
+                      className="object-cover opacity-90 transition duration-500 group-hover:scale-[1.03] group-hover:opacity-100"
+                      sizes="(max-width: 640px) 100vw, 272px"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
                   </div>
-                  
-                  <p className="text-gray-600 text-base leading-relaxed mb-8 flex-1">
-                    {category.shortDescription}
-                  </p>
-                  
-                  {/* Link indicator */}
-                  <div className="flex items-center text-gray-900 group-hover:text-gray-700 transition-colors">
-                    <span className="text-sm uppercase tracking-wider font-normal mr-2">
-                      View Gallery
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <h3 className="font-serif text-2xl font-bold text-white drop-shadow-sm">{cat.name}</h3>
+                    <p className="mt-1 line-clamp-2 text-xs text-white/70">{cat.shortDescription}</p>
+                    <span className="mt-3 inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-white/90 transition group-hover:text-amber-200/95">
+                      View gallery
+                      <svg className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
                     </span>
-                    <svg
-                      className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
                   </div>
-                </div>
-
-                {/* Hover gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* Bottom text */}
-        <div className="mt-20 text-center">
-          <p className="text-gray-500 text-sm max-w-2xl mx-auto leading-relaxed">
-            Each category represents a different way of seeing and documenting the world. 
-            Click on any category to explore the work and learn more about my approach.
-          </p>
+                </article>
+              </Link>
+            )
+          })}
         </div>
       </div>
     </section>
