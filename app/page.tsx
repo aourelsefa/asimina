@@ -3,6 +3,7 @@ import About from '@/components/About'
 import Categories from '@/components/Categories'
 import ScrollingGallery from '@/components/ScrollingGallery'
 import Contact from '@/components/Contact'
+import BlogSection from '@/components/BlogSection'
 import { mockHero, mockAbout, mockGallery, mockContact } from '@/data/mockData'
 
 // TODO: Replace with WordPress API calls when ready
@@ -56,6 +57,7 @@ export default function Home() {
         phone={mockContact.phone}
         address={mockContact.address}
       />
+      <BlogSection />
     </main>
   )
 }

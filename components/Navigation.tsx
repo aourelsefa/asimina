@@ -56,6 +56,7 @@ export default function Navigation() {
     { href: '#about', label: 'About' },
     { href: '#categories', label: 'Categories' },
     { href: '/gallery', label: 'Gallery' },
+    { href: '#blog', label: 'Blog' },
     { href: '#contact', label: 'Contact' },
   ]
 

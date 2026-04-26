@@ -75,12 +75,12 @@ export default function Footer() {
             </p>
             <ul className="space-y-3">
               <li>
-                <a href="#about" className="text-white/70 hover:text-white transition-colors">
+                <a href="/#about" className="text-white/70 hover:text-white transition-colors">
                   About
                 </a>
               </li>
               <li>
-                <a href="#categories" className="text-white/70 hover:text-white transition-colors">
+                <a href="/#categories" className="text-white/70 hover:text-white transition-colors">
                   Categories
                 </a>
               </li>
@@ -90,7 +90,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#contact" className="text-white/70 hover:text-white transition-colors">
+                <a href="/#blog" className="text-white/70 hover:text-white transition-colors">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a href="/#contact" className="text-white/70 hover:text-white transition-colors">
                   Contact
                 </a>
               </li>
@@ -152,7 +157,7 @@ export default function Footer() {
               </p>
               <div className="pt-2">
                 <a
-                  href="#contact"
+                  href="/#contact"
                   className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors"
                 >
                   Send a message
@@ -173,6 +178,17 @@ export default function Footer() {
             </p>
             <p className="text-gray-400 text-xs mt-1 font-normal">
               All rights reserved
+            </p>
+            <p className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-gray-500 md:justify-start">
+              <Link href="/privacy" className="text-gray-400 hover:text-white transition-colors">
+                Privacy policy
+              </Link>
+              <span className="text-gray-600" aria-hidden>
+                ·
+              </span>
+              <Link href="/cookies" className="text-gray-400 hover:text-white transition-colors">
+                Cookie policy
+              </Link>
             </p>
           </div>
 
