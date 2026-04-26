@@ -2,7 +2,9 @@
 // This will be replaced with WordPress API calls later
 
 export const mockHero = {
-  title: 'Photographer in Oslo for Weddings, Baptisms & Events',
+  title: `Photographer in Oslo
+for Weddings,
+Baptisms, Portraits, Events & More`,
   subtitle: 'Capturing real moments with a timeless, cinematic style',
   backgroundImage: {
     id: 1,
@@ -18,10 +20,10 @@ export const mockHero = {
 export const mockAbout = {
   title: 'About Me',
   description: `
-    <p>I am a photographer based in Oslo, with a strong focus on people, places, and atmosphere.</p>
-    <p>I use photography as a visual language to explore emotion, identity, and space. My work is shaped by observation, silence, and the relationship between people and their environment.</p>
-    <p>Rather than directing moments, I wait for them — allowing the image to form naturally. I am drawn to genuine expressions, quiet details, and the subtle atmosphere that surrounds a moment, rather than staged perfection.</p>
-    <p>Whether I photograph people, events, or places, my goal is always the same: to tell a story that feels real, personal, and meaningful. I believe the strongest images are created when people feel comfortable, seen, and understood.</p>
+    <p>I'm a photographer based in Oslo, focused on capturing people, places, and atmosphere as they naturally exist.</p>
+    <p>My work explores emotion, identity, and the subtle connection between individuals and their surroundings. I approach photography with patience, observing rather than interrupting, allowing moments to unfold on their own.</p>
+    <p>I'm not interested in forced poses or artificial perfection. What draws me in are real expressions, quiet details, and the atmosphere that often goes unnoticed.</p>
+    <p>Whether I'm photographing people, events, or spaces, my aim is simple: to create images that feel honest, personal, and alive. The strongest photographs happen when people feel at ease, when they are not performing, but simply being.</p>
   `,
   profileImage: {
     id: 2,
@@ -84,6 +86,7 @@ export const mockGallery = galleryImages.map((filename, index) => ({
 
 export const mockContact = {
   title: 'Get In Touch',
+  lead: "Have a project in mind? I'd love to hear from you — share your dates, location, and what you want the pictures to feel like.",
   email: 'asiminahabipi@gmail.com',
   phone: '+1 (555) 123-4567',
   address: '123 Photography Street, Creative City, CC 12345',

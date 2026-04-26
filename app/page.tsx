@@ -49,8 +49,9 @@ export default function Home() {
           <ScrollingGallery images={mockGallery} variant="minimal" />
         </div>
       </section>
-      <Contact 
+      <Contact
         title={mockContact.title}
+        lead={mockContact.lead}
         email={mockContact.email}
         phone={mockContact.phone}
         address={mockContact.address}

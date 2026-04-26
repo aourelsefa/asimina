@@ -11,22 +11,28 @@ interface HeroProps {
   backgroundImage: WordPressImage | null
 }
 
-/** Prefer a break after “…Oslo” when the title follows “X for Y” pattern; otherwise split near the middle. */
-function heroTitleLines(title: string): [string, string] {
-  const forMarker = ' for '
-  const idx = title.indexOf(forMarker)
+const FOR_MARKER = ' for '
+
+function heroTitleLines(title: string): string[] {
+  if (title.includes('\n')) {
+    return title
+      .split('\n')
+      .map((l) => l.trim())
+      .filter(Boolean)
+  }
+  const idx = title.indexOf(FOR_MARKER)
   if (idx !== -1) {
-    return [title.slice(0, idx), title.slice(idx + 1)]
+    return [title.slice(0, idx).trim(), title.slice(idx + FOR_MARKER.length).trim()]
   }
   const words = title.trim().split(/\s+/)
-  if (words.length <= 1) return [title, '']
+  if (words.length <= 1) return [title]
   const mid = Math.ceil(words.length / 2)
   return [words.slice(0, mid).join(' '), words.slice(mid).join(' ')]
 }
 
 export default function Hero({ title, subtitle, backgroundImage }: HeroProps) {
   const [isLoaded, setIsLoaded] = useState(false)
-  const [titleLine1, titleLine2] = heroTitleLines(title)
+  const titleLines = heroTitleLines(title)
 
   useEffect(() => {
     setIsLoaded(true)
@@ -53,11 +59,15 @@ export default function Hero({ title, subtitle, backgroundImage }: HeroProps) {
       )}
       
       <div className={`relative z-10 text-center px-4 max-w-5xl mx-auto transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-8 leading-[1.05] text-balance text-shadow-soft">
-          <span className="block">{titleLine1}</span>
-          {titleLine2 ? (
-            <span className="block text-white/90 mt-1 md:mt-2">{titleLine2}</span>
-          ) : null}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-8 leading-[1.08] text-balance text-shadow-soft">
+          {titleLines.map((line, i) => (
+            <span
+              key={i}
+              className={i === 0 ? 'block' : 'mt-1.5 block text-white/92 sm:mt-2 md:mt-2.5'}
+            >
+              {line}
+            </span>
+          ))}
         </h1>
 
         <div className="w-24 h-px bg-white/50 mx-auto mb-8" />
