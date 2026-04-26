@@ -88,7 +88,12 @@ export const mockContact = {
   title: 'Get In Touch',
   lead: "Have a project in mind? I'd love to hear from you — share your dates, location, and what you want the pictures to feel like.",
   email: 'asiminahabipi@gmail.com',
-  phone: '+1 (555) 123-4567',
+  phone: '+47 925 25 988',
   address: '123 Photography Street, Creative City, CC 12345',
 }
+
+/** Digits only, for `wa.me` / Viber deep links — matches `mockContact.phone`. */
+export const contactPhoneE164Digits = mockContact.phone.replace(/\D/g, '')
+
+export const socialInstagramUrl = 'https://www.instagram.com/asimina_habipi/?hl=en'
 
